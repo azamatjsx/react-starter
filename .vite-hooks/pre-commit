@@ -1,1 +1,1 @@
-vp staged
+vp staged && vp run lint:fsd
