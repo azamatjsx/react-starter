@@ -13,6 +13,7 @@
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "oxc.oxc-vscode",
     "npm.scriptRunner": "vp",
+    "css.customData": [".vscode/tailwind.json"],
     "oxc.disableNestedConfig": true,
     "oxc.fmt.disableNestedConfig": true,
     "[javascript]": {

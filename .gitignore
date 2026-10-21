@@ -27,6 +27,7 @@ coverage
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/tailwind.json
 .idea/*
 !.idea/OxfmtSettings.xml
 !.idea/externalDependencies.xml
