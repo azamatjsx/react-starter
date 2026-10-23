@@ -16,6 +16,15 @@
     "css.customData": [".vscode/tailwind.json"],
     "oxc.disableNestedConfig": true,
     "oxc.fmt.disableNestedConfig": true,
+    "files.readonlyInclude": {
+        "**/routeTree.gen.ts": true
+    },
+    "files.watcherExclude": {
+        "**/routeTree.gen.ts": true
+    },
+    "search.exclude": {
+        "**/routeTree.gen.ts": true
+    },
     "[javascript]": {
         "editor.defaultFormatter": "oxc.oxc-vscode"
     },

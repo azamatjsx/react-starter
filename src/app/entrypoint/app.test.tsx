@@ -4,9 +4,10 @@ import { describe, expect, it } from "vite-plus/test";
 import { App } from "./app.tsx";
 
 describe("App", () => {
-    it("renders the app", () => {
+    it("renders the home page at /", async () => {
         render(<App />);
 
-        expect(screen.getByText("App")).toBeInTheDocument();
+        // The router resolves the route asynchronously
+        expect(await screen.findByRole("heading", { name: "Home" })).toBeInTheDocument();
     });
 });

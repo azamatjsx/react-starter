@@ -2,6 +2,8 @@ import { fileURLToPath, URL } from "node:url";
 
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
+import { devtools } from "@tanstack/devtools-vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig, lazyPlugins, loadEnv } from "vite-plus";
 
@@ -19,12 +21,14 @@ export default defineConfig(({ mode }) => {
             "*": "vp check --fix",
         },
         fmt: {
+            ignorePatterns: ["src/app/routes/routeTree.gen.ts"],
             sortImports: true,
             sortPackageJson: true,
             sortTailwindcss: true,
             tabWidth: 4,
         },
         lint: {
+            ignorePatterns: ["src/app/routes/routeTree.gen.ts"],
             plugins: ["react", "typescript", "oxc"],
             rules: {
                 "react/rules-of-hooks": "error",
@@ -48,6 +52,18 @@ export default defineConfig(({ mode }) => {
             ],
         },
         plugins: lazyPlugins(() => [
+            // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
+            tanstackRouter({
+                target: "react",
+                autoCodeSplitting: true,
+                routesDirectory: "./src/app/routes",
+                generatedRouteTree: "./src/app/routes/routeTree.gen.ts",
+                routeFileIgnorePrefix: "-",
+                // The generated tree lives next to the routes; don't scan it as a route file
+                routeFileIgnorePattern: "routeTree\\.gen\\.ts$",
+                quoteStyle: "double",
+            }),
+            devtools(),
             react(),
             babel({ presets: [reactCompilerPreset()] }),
             tailwindcss(),
