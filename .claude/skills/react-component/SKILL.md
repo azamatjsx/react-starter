@@ -12,15 +12,15 @@ This project follows [Feature-Sliced Design](https://fsd.how/). When unsure wher
 ```
 src/
   app/          App-wide setup. Segments only, no slices.
-    entrypoint/   main.tsx (mounts React), app.tsx (root component)
+    entrypoint/   main.tsx (mounts React), app.tsx (providers), router.ts, devtools.tsx
     styles/       global CSS
-    routes/       router config (when added)
+    routes/       TanStack Router file routes; each renders a page from pages/. routeTree.gen.ts is generated
   pages/        One slice per page/screen: pages/<page>/{ui,api,model}/ + index.ts
   widgets/      Avoid. Screen-specific blocks stay in their page.
   features/     User interactions reused on several pages: features/<feature>/{ui,api,model,config}/ + index.ts
   entities/     Business concepts (user, post): entities/<entity>/{ui,api,model}/ + index.ts
   shared/       No business logic. Segments only, no slices.
-    api/          backend clients: api (axios instance, ApiError), createSocket (Socket.IO)
+    api/          backend clients: api (axios), ApiError, createSocket (Socket.IO), queryClient (TanStack Query)
     config/       env (validated environment variables)
     ui/           UI kit, one folder + index.ts per component
     lib/          focused internal libraries, one folder + README.md each (e.g. lib/testing)

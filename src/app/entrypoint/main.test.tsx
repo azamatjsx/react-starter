@@ -16,7 +16,7 @@ describe("main", () => {
             await import("./main.tsx");
         });
 
-        expect(screen.getByText("App")).toBeInTheDocument();
+        expect(await screen.findByRole("heading", { name: "Home" })).toBeInTheDocument();
     });
 
     it("throws when #root is missing", async () => {

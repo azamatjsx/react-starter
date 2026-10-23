@@ -13,6 +13,9 @@ dist-ssr
 # Vite
 *.timestamp-*-*.mjs
 
+# TanStack Router plugin scratch files
+/.tanstack/
+
 # Test coverage
 coverage
 

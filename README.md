@@ -24,12 +24,12 @@ The code follows [Feature-Sliced Design](https://fsd.how/). A file may import on
 
 ```
 src/
-  app/            entrypoint (main.tsx, app.tsx), global styles
+  app/            entrypoint (providers, router), routes (TanStack Router), global styles
   pages/          one slice per page
   features/       user interactions reused across pages
   entities/       business concepts (user, post, ...)
   shared/
-    api/          backend clients: api (axios), createSocket (Socket.IO)
+    api/          backend clients: api (axios), createSocket (Socket.IO), queryClient
     config/       validated environment variables (env)
     lib/testing/  unit test setup
 ```
