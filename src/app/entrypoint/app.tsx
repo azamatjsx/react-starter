@@ -1,3 +1,9 @@
+import { TooltipProvider } from "@/shared/ui/tooltip";
+
 export function App() {
-    return <div>App</div>;
+    return (
+        <TooltipProvider>
+            <div>App</div>
+        </TooltipProvider>
+    );
 }
