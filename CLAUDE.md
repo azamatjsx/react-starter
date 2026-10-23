@@ -25,3 +25,18 @@ release. Add a tool name to select part of the graph. For example, run
 - [ ] If setup, runtime, or package-manager behavior looks wrong, run `vp env doctor` and include its output when asking for help.
 
 <!--VITE PLUS END-->
+
+# Architecture: Feature-Sliced Design
+
+All code under `src/` follows [Feature-Sliced Design](https://fsd.how/). Check the docs there when unsure instead of guessing.
+
+- Layers, top to bottom: `app` → `pages` → `widgets` → `features` → `entities` → `shared`. A file may import only from layers **below** its own. Slices on the same layer never import each other (entities may use `@x` cross-imports).
+- `app` and `shared` have segments only, no slices. Other layers have slices (one per business domain, e.g. `features/chat`), each split into segments by purpose: `ui`, `api`, `model`, `lib`, `config`.
+- Every slice has an `index.ts` public API with named re-exports (no `export *`). Code outside the slice imports only from it: `@/features/chat`, never `@/features/chat/ui/chat.tsx`.
+- Imports inside one slice (or inside `app` / `shared`) are relative with the full file path: `../config/env.ts`. Imports across slices or layers use the `@/` alias.
+- Where things go: entrypoint in `app/entrypoint`, global styles in `app/styles`, backend clients in `shared/api` (`api` axios instance for REST, `createSocket` for Socket.IO; never call `fetch` or `axios` directly), env and global config in `shared/config`, UI kit in `shared/ui`.
+- Prefer pages and features over widgets; screen-specific UI stays in its page slice. Not everything is a feature: extract one when it is reused on several pages.
+
+These rules are checked by [Steiger](https://github.com/feature-sliced/steiger) (`steiger.config.ts`): run `vp run lint:fsd` after changing files under `src/`. It also runs in the pre-commit hook. Fix what it reports instead of disabling rules.
+
+See `.claude/skills/react-component/SKILL.md` for file conventions.
